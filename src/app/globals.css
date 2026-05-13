@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@import "tailwindcss";
+
+@theme inline {
+  --color-primary: #FFFFFF;
+  --color-primary-dim: #FFFFFF22;
+  --color-primary-mid: #FFFFFF44;
+  --color-primary-soft: #FFFFFF11;
+  
+  --color-accent: #FEF08A;
+  --color-accent-soft: #FEF9C3;
+
+  --color-neutral-50: #FFFBF2;
+  --color-neutral-100: #F9F5EA;
+  --color-neutral-200: #F2EEDA;
+  --color-neutral-400: #D1CDBC;
+  --color-neutral-600: #8E8A7B;
+  --color-neutral-800: #4B483F;
+  --color-neutral-900: #2C2A25;
+
+  --color-surface-light: #FFFFFF;
+  --color-surface-light-raised: #F9F6F2;
+  --color-surface-light-border: #E8E4DB;
+
+  --color-text-primary: #2C2A25;
+  --color-text-secondary: #8E8A7B;
+  --color-text-muted: #D1CDBC;
+
+  --font-sans: 'DM Sans', sans-serif;
+  --font-serif: 'DM Serif Display', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+:root {
+  --primary: #FFFFFF;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: #FFFBF2;
+  color: #2C2A25;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: #FFFFFF33;
+  color: #FFFFFF;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #3B82F6; }
+
+/* Smooth scroll */
+html { scroll-behavior: smooth; }
+
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-primary {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes bounceSoft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-pulse-primary {
+  animation: pulse-primary 2.5s infinite;
+}
+
+.animate-bounce-soft {
+  animation: bounceSoft 2s infinite ease-in-out;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #F9F5EA 25%, #FFFBF2 50%, #F9F5EA 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 12px;
+}
+
+/* Flashcard 3D effects */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+

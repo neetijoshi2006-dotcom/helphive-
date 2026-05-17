@@ -13,19 +13,23 @@ export function useAuth() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Bypass login logic: immediately set a mock user
-    setUser({
-      uid: 'mock-user-123',
-      email: 'admin@helphive.com',
-      displayName: 'Demo User',
-      role: 'admin',
-      workspaceId: 'default',
-      createdAt: new Date(),
-      lastSeen: new Date(),
-    } as User)
-    setLoading(false)
+    // Check if demo user bypass is active in localStorage
+    const isDemo = typeof window !== 'undefined' && localStorage.getItem('helphive_demo_user') === 'true'
 
-    /*
+    if (isDemo) {
+      setUser({
+        uid: 'demo-user-123',
+        email: 'demo@helphive.com',
+        displayName: 'Demo Bee 🐝',
+        role: 'admin',
+        workspaceId: 'default',
+        createdAt: new Date(),
+        lastSeen: new Date(),
+      } as User)
+      setLoading(false)
+      return
+    }
+
     const unsubscribe = onAuth(async (fbUser) => {
       setFirebaseUser(fbUser)
       if (fbUser) {
@@ -61,8 +65,8 @@ export function useAuth() {
       }
       setLoading(false)
     })
+
     return () => unsubscribe()
-    */
   }, [setUser])
 
   return { user, firebaseUser, loading }

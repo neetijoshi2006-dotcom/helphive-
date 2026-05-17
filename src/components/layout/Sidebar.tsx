@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils/cn'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useAppStore } from '@/lib/store/useAppStore'
 import { signOut } from '@/lib/firebase/auth'
@@ -22,7 +22,16 @@ const NAV = [
 
 export function Sidebar() {
   const pathname = usePathname()
-  const { user, sidebarCollapsed, toggleSidebar, mobileSidebarOpen, setMobileSidebarOpen } = useAppStore()
+  const router = useRouter()
+  const { user, sidebarCollapsed, toggleSidebar, mobileSidebarOpen, setMobileSidebarOpen, setUser } = useAppStore()
+
+  const handleSignOut = async () => {
+    await signOut()
+    localStorage.removeItem('helphive_demo_user')
+    setUser(null)
+    setMobileSidebarOpen(false)
+    router.push('/login')
+  }
 
   const SidebarContent = ({ isMobile = false }) => {
     const collapsed = isMobile ? false : sidebarCollapsed
@@ -52,28 +61,28 @@ export function Sidebar() {
           )}
         </div>
 
-        {/* Nav */}
-        <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
+        {/* Navigation Items */}
+        <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1.5">
           {NAV.map((item) => {
-            const active = pathname === item.href || pathname?.startsWith(item.href + '/')
+            const active = pathname === item.href
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => {
-                  if (isMobile) setMobileSidebarOpen(false)
-                }}
+                onClick={() => isMobile && setMobileSidebarOpen(false)}
                 className={cn(
-                  'flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-200',
-                  active
-                    ? 'bg-white text-neutral-900 shadow-sm scale-[1.02] border border-neutral-200'
-                    : 'text-neutral-600 hover:bg-white hover:text-neutral-900 hover:scale-[1.02]',
-                  collapsed && 'justify-center px-2 scale-100 hover:scale-110'
+                  'flex items-center gap-3 px-4 py-3 rounded-2xl text-neutral-500 font-medium hover:text-neutral-900 hover:bg-neutral-50 transition-all duration-200 select-none group',
+                  active && 'bg-white border border-neutral-200 text-neutral-900 shadow-sm',
+                  collapsed && 'justify-center px-2'
                 )}
                 title={collapsed ? item.label : undefined}
               >
-                <span className="text-lg shrink-0">{item.emoji}</span>
-                {!collapsed && <span>{item.label}</span>}
+                <span className={cn('text-lg group-hover:scale-110 transition-transform duration-200', active && 'scale-110')}>
+                  {item.emoji}
+                </span>
+                {!collapsed && (
+                  <span className="text-sm tracking-wide">{item.label}</span>
+                )}
               </Link>
             )
           })}
@@ -96,7 +105,7 @@ export function Sidebar() {
           <div className="flex items-center gap-2 w-full">
             {isMobile ? (
               <button
-                onClick={() => signOut()}
+                onClick={handleSignOut}
                 className="w-full flex items-center justify-center gap-2 p-2.5 rounded-2xl bg-red-50 border border-red-100 hover:border-red-200 text-red-500 transition-all shadow-sm cursor-pointer text-sm font-medium"
               >
                 <LogOut className="w-4 h-4" />
@@ -113,7 +122,7 @@ export function Sidebar() {
                 </button>
                 {!collapsed && (
                   <button
-                    onClick={() => signOut()}
+                    onClick={handleSignOut}
                     className="p-2.5 rounded-2xl bg-neutral-100 border border-neutral-100 hover:bg-red-50 hover:border-red-200 hover:text-red-500 transition-all shadow-sm cursor-pointer text-neutral-400"
                     title="Sign out"
                   >

@@ -1,14 +1,23 @@
 'use client'
 
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Topbar } from '@/components/layout/Topbar'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { Spinner } from '@/components/ui/Spinner'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { loading } = useAuth()
+  const { user, loading } = useAuth()
+  const router = useRouter()
 
-  if (loading) {
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login')
+    }
+  }, [user, loading, router])
+
+  if (loading || !user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-neutral-50">
         <div className="flex flex-col items-center gap-3">

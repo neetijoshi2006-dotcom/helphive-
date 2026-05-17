@@ -20,32 +20,29 @@ export function useAuth() {
         if (typeof window !== 'undefined') {
           localStorage.removeItem('helphive_demo_user')
         }
+
+        // 🚀 INSTANT RESOLUTION: Set immediate state from auth session to skip the loader instantly!
+        const initialUser = {
+          uid: fbUser.uid,
+          email: fbUser.email || '',
+          displayName: fbUser.displayName || fbUser.email?.split('@')[0] || 'User',
+          role: fbUser.email === 'neetijoshi2006@gmail.com' ? 'admin' : 'agent',
+          workspaceId: 'default',
+          createdAt: new Date(),
+          lastSeen: new Date(),
+        } as User
+
+        setUser(initialUser)
+        setLoading(false) // Toggle loading off IMMEDIATELY!
+
+        // Then silently fetch rich database data in the background
         try {
           const dbUser = await getUser(fbUser.uid)
           if (dbUser) {
             setUser(dbUser)
-          } else {
-            // Create a fallback user object
-            setUser({
-              uid: fbUser.uid,
-              email: fbUser.email || '',
-              displayName: fbUser.displayName || 'User',
-              role: 'agent',
-              workspaceId: 'default',
-              createdAt: new Date(),
-              lastSeen: new Date(),
-            } as User)
           }
-        } catch {
-          setUser({
-            uid: fbUser.uid,
-            email: fbUser.email || '',
-            displayName: fbUser.displayName || 'User',
-            role: 'agent',
-            workspaceId: 'default',
-            createdAt: new Date(),
-            lastSeen: new Date(),
-          } as User)
+        } catch (err) {
+          console.error('Background user fetch failed:', err)
         }
       } else {
         // No real user, check if we have a guest demo session active
@@ -63,8 +60,8 @@ export function useAuth() {
         } else {
           setUser(null)
         }
+        setLoading(false)
       }
-      setLoading(false)
     })
 
     return () => unsubscribe()

@@ -7,6 +7,7 @@ import { useAppStore } from '@/lib/store/useAppStore'
 import { signOut } from '@/lib/firebase/auth'
 import { Avatar } from '@/components/ui/Avatar'
 import { ChevronLeft, LogOut, X } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const NAV = [
   { label: 'Dashboard',      href: '/dashboard',       emoji: '🏠' },
@@ -150,19 +151,31 @@ export function Sidebar() {
       </aside>
 
       {/* Mobile Drawer Sidebar */}
-      {mobileSidebarOpen && (
-        <div className="md:hidden fixed inset-0 z-50 flex">
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-neutral-900/40 backdrop-blur-sm transition-opacity duration-300"
-            onClick={() => setMobileSidebarOpen(false)}
-          />
-          {/* Drawer Panel */}
-          <aside className="relative flex flex-col w-[270px] h-full bg-neutral-100 shadow-2xl z-10 animate-in slide-in-from-left duration-300 ease-out">
-            <SidebarContent isMobile />
-          </aside>
-        </div>
-      )}
+      <AnimatePresence>
+        {mobileSidebarOpen && (
+          <div className="md:hidden fixed inset-0 z-50 flex">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-neutral-900/40 backdrop-blur-sm cursor-pointer"
+              onClick={() => setMobileSidebarOpen(false)}
+            />
+            {/* Drawer Panel */}
+            <motion.aside
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 26, stiffness: 220 }}
+              className="relative flex flex-col w-[270px] h-full bg-neutral-100 shadow-2xl z-10"
+            >
+              <SidebarContent isMobile />
+            </motion.aside>
+          </div>
+        )}
+      </AnimatePresence>
     </>
   )
 }

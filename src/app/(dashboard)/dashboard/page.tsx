@@ -161,20 +161,20 @@ export default function DashboardPage() {
         </motion.div>
 
         {/* Stats Grid */}
-        <motion.div {...item(2)} className="col-span-1 lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
+        <motion.div {...item(2)} className="col-span-1 lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
           {[
-            { label: 'Study Streak', value: stats?.streak !== undefined ? `${stats.streak} Days` : '0 Days', icon: <Flame className="text-orange-500" />, bg: 'bg-orange-50' },
-            { label: 'XP Earned', value: stats?.xp !== undefined ? stats.xp.toLocaleString() : '0', icon: <Star className="text-yellow-600" />, bg: 'bg-yellow-50' },
-            { label: 'Notes Shared', value: stats?.notesShared !== undefined ? `${stats.notesShared}` : '0', icon: <BookOpen className="text-neutral-900" />, bg: 'bg-neutral-50' },
-            { label: 'Global Rank', value: stats?.rank || 'Bronze V', icon: <Trophy className="text-neutral-900" />, bg: 'bg-neutral-50' },
+            { label: 'Study Streak', value: stats?.streak !== undefined ? `${stats.streak} Days` : '0 Days', icon: <Flame className="text-orange-500 w-5 h-5 md:w-6 md:h-6" />, bg: 'bg-orange-50' },
+            { label: 'XP Earned', value: stats?.xp !== undefined ? stats.xp.toLocaleString() : '0', icon: <Star className="text-yellow-600 w-5 h-5 md:w-6 md:h-6" />, bg: 'bg-yellow-50' },
+            { label: 'Notes Shared', value: stats?.notesShared !== undefined ? `${stats.notesShared}` : '0', icon: <BookOpen className="text-neutral-900 w-5 h-5 md:w-6 md:h-6" />, bg: 'bg-neutral-50' },
+            { label: 'Global Rank', value: stats?.rank || 'Bronze V', icon: <Trophy className="text-neutral-900 w-5 h-5 md:w-6 md:h-6" />, bg: 'bg-neutral-50' },
           ].map((stat, i) => (
-            <Card key={i} className="flex items-center gap-4 p-6 bg-white border-neutral-100 shadow-sm rounded-2xl">
-              <div className={`w-12 h-12 rounded-2xl ${stat.bg} flex items-center justify-center shrink-0`}>
+            <Card key={i} className="flex items-center gap-2 xs:gap-3 md:gap-4 p-3.5 xs:p-4 md:p-6 bg-white border-neutral-100 shadow-sm rounded-2xl min-w-0">
+              <div className={`w-9 h-9 xs:w-10 xs:h-10 md:w-12 md:h-12 rounded-2xl ${stat.bg} flex items-center justify-center shrink-0`}>
                 {stat.icon}
               </div>
-              <div>
-                <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">{stat.label}</p>
-                <p className="text-xl font-bold text-neutral-900 mt-0.5">{stat.value}</p>
+              <div className="flex-1 min-w-0">
+                <p className="text-[9px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest truncate">{stat.label}</p>
+                <p className="text-sm xs:text-base md:text-xl font-bold text-neutral-900 mt-0.5 truncate" title={stat.value}>{stat.value}</p>
               </div>
             </Card>
           ))}

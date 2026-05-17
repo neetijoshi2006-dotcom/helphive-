@@ -61,15 +61,31 @@ export async function chatWithAI(history: { role: string; parts: string }[], use
 }
 
 export async function generateStudyPlan(syllabus: string, datesheet: string): Promise<string> {
-  const prompt = `Please create a detailed, day-by-day study planner based on this syllabus and exam datesheet.
-Break down the syllabus into manageable daily tasks leading up to the exams. Make sure there is time for revision before each exam date.
-Format the output nicely using Markdown, bullet points, and use fun emojis!
+  // Inject the real current date so the AI doesn't guess or use a wrong baseline
+  const today = new Date().toLocaleDateString('en-IN', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+    timeZone: 'Asia/Kolkata'
+  })
+
+  const prompt = `Today's date is: ${today}
+
+Please create a detailed, day-by-day study planner based on the syllabus and exam datesheet below.
+
+STRICT RULES you MUST follow:
+1. Start the plan from TODAY (${today}) — never from any earlier or later date.
+2. End the plan EXACTLY on the last exam date listed in the datesheet — never go past it.
+3. Do NOT add any study days after the final exam date. The plan must stop on or before the exam day.
+4. Distribute the syllabus topics evenly and realistically across the available days.
+5. Include 1-2 revision days before each exam in the schedule.
+6. Format nicely in Markdown with day-by-day headings, bullet points and fun emojis 🌸✨📚.
 
 Syllabus:
 ${syllabus}
 
-Datesheet:
+Exam Datesheet:
 ${datesheet}`
+
   return callGroqAPI([{ role: 'user', content: prompt }])
 }
+
 

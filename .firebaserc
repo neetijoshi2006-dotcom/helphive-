@@ -1,5 +1,7 @@
 {
   "projects": {
     "default": "helphive-ebcc1"
-  }
+  },
+  "targets": {},
+  "etags": {}
 }

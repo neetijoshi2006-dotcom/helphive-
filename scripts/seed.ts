@@ -1,13 +1,13 @@
 import { initializeApp, getApps, cert } from 'firebase-admin/app'
 import { getFirestore } from 'firebase-admin/firestore'
 
-// Note: To run this locally, you must have FIREBASE_ADMIN_PRIVATE_KEY in your env
+// Note: To run this locally, you must have FBASE_ADMIN_PRIVATE_KEY in your env
 // For demo purposes, this script just outlines what data would be inserted.
 
 const serviceAccount = {
-  projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
-  clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
-  privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+  projectId: process.env.FBASE_ADMIN_PROJECT_ID,
+  clientEmail: process.env.FBASE_ADMIN_CLIENT_EMAIL,
+  privateKey: process.env.FBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, '\n'),
 }
 
 // In a real environment with credentials, we would initialize like this:

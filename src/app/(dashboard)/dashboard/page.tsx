@@ -21,9 +21,9 @@ export default function DashboardPage() {
 
   return (
     <PageWrapper>
-      <div className="grid grid-cols-3 gap-8 auto-rows-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 auto-rows-auto">
         {/* Welcome Hero — 2/3 width */}
-        <motion.div {...item(0)} className="col-span-2">
+        <motion.div {...item(0)} className="col-span-1 lg:col-span-2">
           <Card className="relative overflow-hidden h-full min-h-[260px] flex flex-col justify-between bg-white border-neutral-200 shadow-sm">
             <div className="absolute top-0 right-0 w-80 h-80 bg-neutral-50 rounded-full -translate-y-1/3 translate-x-1/3 opacity-50" />
             <div className="relative z-10">
@@ -39,7 +39,7 @@ export default function DashboardPage() {
                 You're on a <span className="font-bold text-neutral-900">5-day streak!</span> Keep it up and you'll reach your weekly goal by Friday.
               </p>
             </div>
-            <div className="relative z-10 flex gap-4 mt-8">
+            <div className="relative z-10 flex flex-wrap gap-4 mt-8">
               <Link href="/study-planner">
                 <button className="bg-neutral-800 text-white px-8 py-4 rounded-2xl font-bold hover:scale-105 transition-all shadow-xl shadow-neutral-900/10">
                   Plan Study Session
@@ -55,7 +55,7 @@ export default function DashboardPage() {
         </motion.div>
 
         {/* Study Goal Tracker — 1/3 width */}
-        <motion.div {...item(1)}>
+        <motion.div {...item(1)} className="col-span-1">
           <Card className="h-full bg-neutral-100 text-neutral-900 border-neutral-200 flex flex-col justify-between p-8">
             <div>
               <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest mb-6">Weekly Goal 🎯</h3>
@@ -71,14 +71,14 @@ export default function DashboardPage() {
               </div>
             </div>
             <div className="text-center">
-              <p className="text-sm font-medium text-neutral-300">12 / 16 hours completed</p>
+              <p className="text-sm font-medium text-neutral-350">12 / 16 hours completed</p>
               <p className="text-xs text-neutral-500 mt-1">4 hours left to reach your goal!</p>
             </div>
           </Card>
         </motion.div>
 
         {/* Stats Grid */}
-        <motion.div {...item(2)} className="col-span-3 grid grid-cols-4 gap-6">
+        <motion.div {...item(2)} className="col-span-1 lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
           {[
             { label: 'Study Streak', value: '5 Days', icon: <Flame className="text-orange-500" />, bg: 'bg-orange-50' },
             { label: 'XP Earned', value: '1,240', icon: <Star className="text-yellow-600" />, bg: 'bg-yellow-50' },
@@ -98,7 +98,7 @@ export default function DashboardPage() {
         </motion.div>
 
         {/* Recent Community Feed Preview */}
-        <motion.div {...item(3)} className="col-span-2">
+        <motion.div {...item(3)} className="col-span-1 lg:col-span-2">
           <Card className="h-full bg-white border-neutral-100">
             <div className="flex items-center justify-between mb-8">
               <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest">Community Pulse 💬</h3>
@@ -129,7 +129,7 @@ export default function DashboardPage() {
         </motion.div>
 
         {/* Upcoming Tasks */}
-        <motion.div {...item(4)}>
+        <motion.div {...item(4)} className="col-span-1">
           <Card className="h-full bg-white border-neutral-100">
             <div className="flex items-center justify-between mb-8">
               <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest">Upcoming 📅</h3>
@@ -155,7 +155,7 @@ export default function DashboardPage() {
         </motion.div>
         
         {/* Quick Links / Study Tools */}
-        <motion.div {...item(5)} className="col-span-3 grid grid-cols-3 gap-6 mt-2">
+        <motion.div {...item(5)} className="col-span-1 lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6 mt-2">
           <Link href="/community">
             <Card className="p-6 bg-white border-neutral-100 hover:border-neutral-300 transition-all flex items-center gap-4 group">
               <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform">

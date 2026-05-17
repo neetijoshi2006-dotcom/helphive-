@@ -1,0 +1,72 @@
+========================================================================
+                      HELPHIVE STUDY HUBS: REACT HOOKS
+========================================================================
+Subject: Web Development / Frontend Engineering
+Topic: React Hooks Cheatsheet & Best Practices
+Author: Alex Rivera
+HelpHive ID: WEB-HOOKS-002
+
+------------------------------------------------------------------------
+1. WHAT ARE REACT HOOKS?
+------------------------------------------------------------------------
+React Hooks are functions that let you "hook into" React state and lifecycle
+features from function components. Introduced in React 16.8.
+
+Rules of Hooks:
+1. Only call Hooks at the top level (not inside loops, conditions, or nested functions).
+2. Only call Hooks from React function components or custom Hooks.
+
+------------------------------------------------------------------------
+2. CORE HOOKS REFERENCE
+------------------------------------------------------------------------
+
+--- useState ---
+Purpose: Declares state variables in a functional component.
+Usage:
+  const [count, setCount] = useState(0);
+  // Update state:
+  setCount(prevCount => prevCount + 1);
+
+--- useEffect ---
+Purpose: Performs side effects (data fetching, subscriptions, DOM manipulation).
+Usage:
+  useEffect(() => {
+    console.log("Component mounted / count updated");
+    return () => {
+      console.log("Cleanup function (component unmount/before next effect)");
+    };
+  }, [count]); // Dependency array: only runs if these values change.
+
+--- useContext ---
+Purpose: Consumes a value from a React Context without prop drilling.
+Usage:
+  const theme = useContext(ThemeContext);
+
+------------------------------------------------------------------------
+3. ADVANCED HOOKS
+------------------------------------------------------------------------
+
+--- useMemo ---
+Purpose: Returns a memoized value. Prevents expensive recalculations on re-render.
+Usage:
+  const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+
+--- useCallback ---
+Purpose: Returns a memoized callback function. Prevents recreation of handlers.
+Usage:
+  const handleClick = useCallback(() => {
+    doSomething(a);
+  }, [a]);
+
+--- useRef ---
+Purpose: Persists values across renders without triggering a re-render.
+Also used to access DOM elements directly.
+Usage:
+  const inputRef = useRef(null);
+  // Focus:
+  inputRef.current.focus();
+
+------------------------------------------------------------------------
+Thank you for downloading study notes from HelpHive! 🐝🍯
+Happy Studying! Keep buzzing and learning!
+------------------------------------------------------------------------

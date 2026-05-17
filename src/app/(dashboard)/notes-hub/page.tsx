@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { PageWrapper } from '@/components/layout/PageWrapper'
 import { Card } from '@/components/ui/Card'
@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/Badge'
 import { Search, Plus, Download, FileText, Heart, UploadCloud } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { relativeTime } from '@/lib/utils/format'
+import { cn } from '@/lib/utils/cn'
 
 // Mock Data
 const MOCK_NOTES = [
@@ -38,15 +39,34 @@ export default function NotesHubPage() {
   const [title, setTitle] = useState('')
   const [subject, setSubject] = useState('Computer Science')
   const [desc, setDesc] = useState('')
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const filtered = notes.filter(n => 
     n.title.toLowerCase().includes(search.toLowerCase()) || 
     n.subject.toLowerCase().includes(search.toLowerCase())
   )
 
-  const handleDownload = (title: string) => {
+  const handleDownload = (id: string, title: string) => {
     toast.success(`Downloading ${title}... 🎀`)
-    // In a real app, this would trigger a file download from Firebase Storage
+    const link = document.createElement('a')
+    if (id === '1') {
+      link.href = '/notes/dbms-normalization.txt'
+      link.download = 'DBMS_Normalization_Notes.txt'
+    } else if (id === '2') {
+      link.href = '/notes/react-hooks.txt'
+      link.download = 'React_Hooks_Cheatsheet.txt'
+    } else if (id === '3') {
+      link.href = '/notes/operating-systems.txt'
+      link.download = 'Operating_Systems_Notes.txt'
+    } else {
+      // Fallback download
+      link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(`Notes Content for: ${title}\nUploaded in HelpHive 🐝`)
+      link.download = `${title.replace(/\s+/g, '_')}_Notes.txt`
+    }
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
   }
 
   const handleLike = (id: string) => {
@@ -57,12 +77,16 @@ export default function NotesHubPage() {
   const handleUpload = (e: React.FormEvent) => {
     e.preventDefault()
     if (!title.trim()) return
+    if (!selectedFile) {
+      toast.error('Please attach a PDF or text file first! 📝')
+      return
+    }
 
     const newNote = {
       id: Date.now().toString(),
       title,
       subject,
-      author: 'Demo User', // You
+      author: 'Demo User',
       downloads: 0,
       likes: 0,
       date: new Date(),
@@ -72,6 +96,7 @@ export default function NotesHubPage() {
     setShowUpload(false)
     setTitle('')
     setDesc('')
+    setSelectedFile(null)
     toast.success('Your notes have been posted! 🎉')
   }
 
@@ -140,7 +165,7 @@ export default function NotesHubPage() {
                 </div>
                 
                 <button 
-                  onClick={() => handleDownload(note.title)}
+                  onClick={() => handleDownload(note.id, note.title)}
                   className="bg-neutral-900 text-white px-5 py-2 rounded-xl text-xs font-bold hover:scale-105 transition-all"
                 >
                   Download
@@ -191,11 +216,41 @@ export default function NotesHubPage() {
 
           <div className="space-y-2">
             <label className="text-xs font-bold text-neutral-400 uppercase tracking-widest ml-1">File Attachment</label>
-            <div className="border-2 border-dashed border-neutral-200 bg-neutral-50 rounded-[2rem] p-10 flex flex-col items-center justify-center text-center hover:bg-white hover:border-neutral-900 transition-all cursor-pointer group">
-              <UploadCloud className="w-10 h-10 text-neutral-300 mb-4 group-hover:text-neutral-900 transition-colors" />
-              <p className="text-sm font-bold text-neutral-900">Click to upload your PDF</p>
-              <p className="text-xs text-neutral-400 mt-1">Maximum size 10MB</p>
-              <input type="file" className="hidden" accept=".pdf" />
+            <div 
+              onClick={() => fileInputRef.current?.click()}
+              className={cn(
+                "border-2 border-dashed rounded-[2rem] p-10 flex flex-col items-center justify-center text-center transition-all cursor-pointer group",
+                selectedFile 
+                  ? "border-green-500 bg-green-50/20 hover:bg-green-50/30" 
+                  : "border-neutral-200 bg-neutral-50 hover:bg-white hover:border-neutral-900"
+              )}
+            >
+              <UploadCloud className={cn(
+                "w-10 h-10 mb-4 transition-colors group-hover:text-neutral-900",
+                selectedFile ? "text-green-500" : "text-neutral-300"
+              )} />
+              {selectedFile ? (
+                <>
+                  <p className="text-sm font-bold text-green-700">Selected: {selectedFile.name}</p>
+                  <p className="text-xs text-neutral-400 mt-1">{(selectedFile.size / (1024 * 1024)).toFixed(2)} MB • Click to change</p>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm font-bold text-neutral-900">Click to upload your PDF</p>
+                  <p className="text-xs text-neutral-400 mt-1">Maximum size 10MB</p>
+                </>
+              )}
+              <input 
+                ref={fileInputRef}
+                type="file" 
+                className="hidden" 
+                accept=".pdf,.txt" 
+                onChange={(e) => {
+                  if (e.target.files?.[0]) {
+                    setSelectedFile(e.target.files[0])
+                  }
+                }}
+              />
             </div>
           </div>
 

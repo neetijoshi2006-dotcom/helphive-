@@ -1,0 +1,60 @@
+========================================================================
+                      HELPHIVE STUDY HUBS: OPERATING SYSTEMS
+========================================================================
+Subject: Computer Science
+Topic: Processes, Threads & CPU Scheduling (Ch 4-6)
+Author: Jordan Lee
+HelpHive ID: CS-OS-003
+
+------------------------------------------------------------------------
+1. PROCESSES (Ch 4)
+------------------------------------------------------------------------
+A process is a program in execution. It represents the unit of work in
+modern time-sharing systems.
+
+Process Control Block (PCB): contains information about the process:
+- Process state (New, Ready, Running, Waiting, Terminated)
+- Program counter
+- CPU registers
+- CPU scheduling information
+- Memory-management information
+
+------------------------------------------------------------------------
+2. THREADS (Ch 5)
+------------------------------------------------------------------------
+A thread is a basic unit of CPU utilization. It comprises a thread ID,
+a program counter, a register set, and a stack.
+
+It shares with other threads belonging to the same process:
+- Code section
+- Data section
+- Operating system resources (e.g. open files)
+
+Multi-Threading Models:
+- Many-to-One
+- One-to-One (e.g., Windows, Linux)
+- Many-to-Many
+
+------------------------------------------------------------------------
+3. CPU SCHEDULING (Ch 6)
+------------------------------------------------------------------------
+The process of choosing which process in the ready queue is allocated
+the CPU.
+
+Scheduling Criteria:
+- CPU Utilization (Keep CPU as busy as possible)
+- Throughput (Number of processes completed per time unit)
+- Turnaround Time (Submission to completion time)
+- Waiting Time (Time spent waiting in ready queue)
+- Response Time (Time from request submission to first response)
+
+Scheduling Algorithms:
+1. First-Come, First-Served (FCFS) - Non-preemptive, suffers from Convoy Effect.
+2. Shortest-Job-First (SJF) - Optimal average waiting time, hard to predict next burst.
+3. Round Robin (RR) - Time Quantum based scheduling, designed for time-sharing.
+4. Priority Scheduling - Suffers from Starvation (Solution: Aging).
+
+------------------------------------------------------------------------
+Thank you for downloading study notes from HelpHive! 🐝🍯
+Happy Studying! Keep buzzing and learning!
+------------------------------------------------------------------------

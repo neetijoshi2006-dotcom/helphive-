@@ -13,26 +13,13 @@ export function useAuth() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Check if demo user bypass is active in localStorage
-    const isDemo = typeof window !== 'undefined' && localStorage.getItem('helphive_demo_user') === 'true'
-
-    if (isDemo) {
-      setUser({
-        uid: 'demo-user-123',
-        email: 'demo@helphive.com',
-        displayName: 'Demo Bee 🐝',
-        role: 'admin',
-        workspaceId: 'default',
-        createdAt: new Date(),
-        lastSeen: new Date(),
-      } as User)
-      setLoading(false)
-      return
-    }
-
     const unsubscribe = onAuth(async (fbUser) => {
       setFirebaseUser(fbUser)
       if (fbUser) {
+        // Clear demo bypass since we have a real user!
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('helphive_demo_user')
+        }
         try {
           const dbUser = await getUser(fbUser.uid)
           if (dbUser) {
@@ -61,7 +48,21 @@ export function useAuth() {
           } as User)
         }
       } else {
-        setUser(null)
+        // No real user, check if we have a guest demo session active
+        const isDemo = typeof window !== 'undefined' && localStorage.getItem('helphive_demo_user') === 'true'
+        if (isDemo) {
+          setUser({
+            uid: 'demo-user-123',
+            email: 'demo@helphive.com',
+            displayName: 'Demo Bee 🐝',
+            role: 'admin',
+            workspaceId: 'default',
+            createdAt: new Date(),
+            lastSeen: new Date(),
+          } as User)
+        } else {
+          setUser(null)
+        }
       }
       setLoading(false)
     })

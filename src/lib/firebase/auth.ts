@@ -5,13 +5,40 @@ import {
   onAuthStateChanged,
   updateProfile,
   sendPasswordResetEmail,
+  confirmPasswordReset as firebaseConfirmPasswordReset,
+  verifyPasswordResetCode as firebaseVerifyPasswordResetCode,
   type User as FirebaseUser,
 } from 'firebase/auth'
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
 import { auth, db } from './config'
 
 export async function sendPasswordReset(email: string) {
-  await sendPasswordResetEmail(auth, email)
+  try {
+    let actionCodeSettings = undefined
+    if (typeof window !== 'undefined') {
+      actionCodeSettings = {
+        url: `${window.location.origin}/login`,
+        handleCodeInApp: false,
+      }
+    }
+    await sendPasswordResetEmail(auth, email, actionCodeSettings)
+  } catch (err: any) {
+    // If the active domain is not yet whitelisted in Firebase Console, fallback to default template
+    if (err?.code === 'auth/unauthorized-continue-uri') {
+      console.warn('Continue URL domain not whitelisted. Falling back to default email template.')
+      await sendPasswordResetEmail(auth, email)
+    } else {
+      throw err
+    }
+  }
+}
+
+export async function verifyResetCode(code: string) {
+  return await firebaseVerifyPasswordResetCode(auth, code)
+}
+
+export async function confirmReset(code: string, newPassword: string) {
+  await firebaseConfirmPasswordReset(auth, code, newPassword)
 }
 
 export async function signIn(email: string, password: string) {

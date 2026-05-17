@@ -73,7 +73,7 @@ export default function LoginPage() {
             <span className="text-3xl">🐝</span>
           </motion.div>
           <h1 className="font-serif text-4xl text-neutral-900 tracking-tight italic">HelpHive</h1>
-          <p className="text-sm text-neutral-400 mt-1 font-medium">Your cozy educational sweet spot 🌸</p>
+          <p className="text-sm text-neutral-400 mt-1 font-medium">Your cozy educational sweet spot 🍯</p>
         </div>
 
         {/* Auth Box */}

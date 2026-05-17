@@ -20,16 +20,20 @@ export async function signUp(email: string, password: string, displayName: strin
   const cred = await createUserWithEmailAndPassword(auth, email, password)
   await updateProfile(cred.user, { displayName })
 
-  // Create user document in Firestore
-  await setDoc(doc(db, 'users', cred.user.uid), {
-    uid: cred.user.uid,
-    email: cred.user.email,
-    displayName,
-    role: 'agent',
-    workspaceId: 'default',
-    createdAt: serverTimestamp(),
-    lastSeen: serverTimestamp(),
-  })
+  // Create user document in Firestore - caught gracefully so lack of database config doesn't block signup
+  try {
+    await setDoc(doc(db, 'users', cred.user.uid), {
+      uid: cred.user.uid,
+      email: cred.user.email,
+      displayName,
+      role: 'agent',
+      workspaceId: 'default',
+      createdAt: serverTimestamp(),
+      lastSeen: serverTimestamp(),
+    })
+  } catch (firestoreError) {
+    console.warn('Firestore registration write bypassed or failed:', firestoreError)
+  }
 
   document.cookie = `session=${await cred.user.getIdToken()};path=/;max-age=${60 * 60 * 24 * 7}`
   return cred.user

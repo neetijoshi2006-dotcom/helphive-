@@ -39,7 +39,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="hidden lg:block absolute top-[15%] left-[25%] text-4xl animate-float-slow opacity-15 select-none pointer-events-none z-0" title="Cozy Bee">🐝</div>
       <div className="hidden lg:block absolute bottom-[25%] left-[28%] text-3xl animate-float-slower opacity-15 select-none pointer-events-none z-0" title="Honey Pot">🍯</div>
       <div className="hidden lg:block absolute top-[25%] right-[8%] text-3xl animate-float-slower opacity-15 select-none pointer-events-none z-0" title="Sparkle">✨</div>
-      <div className="hidden lg:block absolute bottom-[15%] right-[22%] text-4xl animate-float-slow opacity-15 select-none pointer-events-none z-0" title="Blossom">🌸</div>
+      <div className="hidden lg:block absolute bottom-[15%] right-[22%] text-4xl animate-float-slow opacity-15 select-none pointer-events-none z-0" title="Leaf">🌿</div>
       <div className="hidden lg:block absolute top-[50%] left-[18%] text-2xl animate-float-slower opacity-10 select-none pointer-events-none z-0" title="Daisy">🌼</div>
       <div className="hidden lg:block absolute top-[70%] right-[32%] text-2xl animate-float-slow opacity-10 select-none pointer-events-none z-0" title="Sweet star">⭐</div>
 

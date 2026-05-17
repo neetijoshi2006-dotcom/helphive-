@@ -70,7 +70,13 @@ export function Sidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => isMobile && setMobileSidebarOpen(false)}
+                onClick={() => {
+                  if (isMobile) {
+                    setTimeout(() => {
+                      setMobileSidebarOpen(false)
+                    }, 80)
+                  }
+                }}
                 className={cn(
                   'flex items-center gap-3 px-4 py-3 rounded-2xl text-neutral-500 font-medium hover:text-neutral-900 hover:bg-neutral-50 transition-all duration-200 select-none group',
                   active && 'bg-white border border-neutral-200 text-neutral-900 shadow-sm',
@@ -95,13 +101,23 @@ export function Sidebar() {
           collapsed && 'flex flex-col items-center'
         )}>
           {!collapsed && user && (
-            <div className="flex items-center gap-3 mb-4 px-2">
+            <Link
+              href="/settings"
+              onClick={() => {
+                if (isMobile) {
+                  setTimeout(() => {
+                    setMobileSidebarOpen(false)
+                  }, 80)
+                }
+              }}
+              className="flex items-center gap-3 mb-4 px-2 hover:bg-neutral-200/40 p-1.5 rounded-2xl transition-all cursor-pointer w-full group"
+            >
               <Avatar name={user.displayName || 'User'} size="sm" />
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-neutral-900 truncate">{user.displayName}</p>
+                <p className="text-sm font-medium text-neutral-900 truncate group-hover:text-primary transition-colors">{user.displayName}</p>
                 <p className="text-xs text-neutral-400 capitalize font-medium">{user.role}</p>
               </div>
-            </div>
+            </Link>
           )}
           <div className="flex items-center gap-2 w-full">
             {isMobile ? (

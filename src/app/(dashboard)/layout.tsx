@@ -31,9 +31,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="flex h-screen overflow-hidden bg-neutral-50 relative">
       {/* Decorative ambient blurred blobs */}
-      <div className="absolute top-[10%] left-[5%] w-[400px] h-[400px] bg-primary-100 rounded-full blur-[100px] opacity-30 pointer-events-none z-0" />
-      <div className="absolute bottom-[10%] right-[5%] w-[450px] h-[450px] bg-primary-200 rounded-full blur-[120px] opacity-25 pointer-events-none z-0" />
-      <div className="absolute top-[40%] right-[15%] w-[300px] h-[300px] bg-accent-soft rounded-full blur-[90px] opacity-35 pointer-events-none z-0" />
+      <div className="hidden md:block absolute top-[10%] left-[5%] w-[400px] h-[400px] bg-primary-100 rounded-full blur-[100px] opacity-30 pointer-events-none z-0" />
+      <div className="hidden md:block absolute bottom-[10%] right-[5%] w-[450px] h-[450px] bg-primary-200 rounded-full blur-[120px] opacity-25 pointer-events-none z-0" />
+      <div className="hidden md:block absolute top-[40%] right-[15%] w-[300px] h-[300px] bg-accent-soft rounded-full blur-[90px] opacity-35 pointer-events-none z-0" />
 
       {/* Floating Emojis & Shapes across the site */}
       <div className="hidden lg:block absolute top-[15%] left-[25%] text-4xl animate-float-slow opacity-15 select-none pointer-events-none z-0" title="Cozy Bee">🐝</div>

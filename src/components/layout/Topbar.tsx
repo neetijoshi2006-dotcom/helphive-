@@ -3,6 +3,7 @@
 import { Search, Menu } from 'lucide-react'
 import { useAppStore } from '@/lib/store/useAppStore'
 import { Avatar } from '@/components/ui/Avatar'
+import Link from 'next/link'
 
 export function Topbar() {
   const { user, toggleMobileSidebar } = useAppStore()
@@ -37,10 +38,13 @@ export function Topbar() {
           <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-neutral-900 border-2 border-white rounded-full" />
         </button>
         <div className="w-px h-8 bg-neutral-100" />
-        <div className="flex items-center gap-2 md:gap-3 bg-white p-1 pr-3 rounded-full border border-neutral-100 shadow-sm cursor-pointer hover:border-neutral-200 transition-all">
+        <Link 
+          href="/settings"
+          className="flex items-center gap-2 bg-white p-1 pr-1.5 sm:pr-3 rounded-full border border-neutral-100 shadow-sm cursor-pointer hover:border-neutral-200 hover:bg-neutral-50 transition-all select-none"
+        >
           <Avatar name={user?.displayName || 'User'} size="sm" />
-          <span className="text-sm font-medium text-neutral-800 hidden sm:inline">Hi, {user?.displayName?.split(' ')[0] || 'User'} 👋</span>
-        </div>
+          <span className="text-xs sm:text-sm font-medium text-neutral-800 hidden sm:inline">Hi, {user?.displayName?.split(' ')[0] || 'User'} 👋</span>
+        </Link>
       </div>
     </header>
   )

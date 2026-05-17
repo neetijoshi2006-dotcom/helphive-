@@ -90,7 +90,7 @@ export default function LoginPage() {
             <span className="text-3xl">🐝</span>
           </motion.div>
           <h1 className="font-serif text-4xl text-neutral-900 tracking-tight italic">HelpHive</h1>
-          <p className="text-sm text-neutral-400 mt-1 font-medium">Your cozy educational sweet spot 🍯</p>
+          <p className="text-sm text-neutral-600 mt-1 font-medium">Your cozy educational sweet spot 🍯</p>
         </div>
 
         {/* Auth Box */}
@@ -105,7 +105,7 @@ export default function LoginPage() {
                 transition={{ duration: 0.3 }}
               >
                 <h2 className="text-xl font-bold text-neutral-900 mb-1">Welcome Back! ✨</h2>
-                <p className="text-sm text-neutral-400 mb-6">Sign in to resume your learning adventures.</p>
+                <p className="text-sm text-neutral-600 mb-6">Sign in to resume your learning adventures.</p>
 
                 {resetRequestedEmail && (
                   <div className="mb-6 p-4 rounded-2xl bg-amber-50 border border-amber-200/60 text-xs text-amber-800 leading-relaxed flex items-start gap-2">
@@ -144,7 +144,7 @@ export default function LoginPage() {
                           setView('forgot')
                           setResetEmail(email)
                         }}
-                        className="text-xs font-bold text-neutral-400 hover:text-neutral-900 transition-colors cursor-pointer select-none"
+                        className="text-xs font-bold text-neutral-500 hover:text-neutral-900 transition-colors cursor-pointer select-none"
                       >
                         Forgot Password?
                       </button>
@@ -173,7 +173,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setView('login')}
-                  className="flex items-center gap-1.5 text-xs font-bold text-neutral-400 hover:text-neutral-900 transition-colors mb-4 cursor-pointer select-none"
+                  className="flex items-center gap-1.5 text-xs font-bold text-neutral-500 hover:text-neutral-900 transition-colors mb-4 cursor-pointer select-none"
                 >
                   <ArrowLeft size={14} />
                   <span>Back to Login</span>
@@ -183,7 +183,7 @@ export default function LoginPage() {
                   <Lock className="text-primary w-5 h-5" />
                   <h2 className="text-xl font-bold text-neutral-900">Forgot Password?</h2>
                 </div>
-                <p className="text-sm text-neutral-400 mb-6">
+                <p className="text-sm text-neutral-600 mb-6">
                   No worries! Enter your registered email address and we'll send you a link to reset your password.
                 </p>
 
@@ -214,7 +214,7 @@ export default function LoginPage() {
           </AnimatePresence>
         </div>
 
-        <p className="text-center text-sm text-neutral-400 mt-6 font-medium">
+        <p className="text-center text-sm text-neutral-600 mt-6 font-medium">
           New to the hive?{' '}
           <Link href="/register" className="text-primary font-semibold hover:underline">
             Create an Account

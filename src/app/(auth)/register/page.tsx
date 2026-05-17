@@ -60,13 +60,13 @@ export default function RegisterPage() {
             <span className="text-3xl">🐝</span>
           </motion.div>
           <h1 className="font-serif text-4xl text-neutral-900 tracking-tight italic">HelpHive</h1>
-          <p className="text-sm text-neutral-400 mt-1 font-medium">Your cozy educational sweet spot 🍯</p>
+          <p className="text-sm text-neutral-600 mt-1 font-medium">Your cozy educational sweet spot 🍯</p>
         </div>
 
         {/* Auth Box */}
         <div className="bg-white/80 backdrop-blur-md rounded-[32px] border border-neutral-100 p-8 shadow-xl">
           <h2 className="text-xl font-bold text-neutral-900 mb-1">Create Account! ✨</h2>
-          <p className="text-sm text-neutral-400 mb-6">Join the hive to track goals and build study plans.</p>
+          <p className="text-sm text-neutral-600 mb-6">Join the hive to track goals and build study plans.</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input
@@ -110,7 +110,7 @@ export default function RegisterPage() {
           </form>
         </div>
 
-        <p className="text-center text-sm text-neutral-400 mt-6 font-medium">
+        <p className="text-center text-sm text-neutral-600 mt-6 font-medium">
           Already in the hive?{' '}
           <Link href="/login" className="text-primary font-semibold hover:underline">
             Sign In here

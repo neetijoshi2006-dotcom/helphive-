@@ -22,11 +22,12 @@ export function useAuth() {
         }
 
         // 🚀 INSTANT RESOLUTION: Set immediate state from auth session to skip the loader instantly!
+        // Role defaults to 'agent' here — the real role (e.g. 'admin') is loaded from Firestore below.
         const initialUser = {
           uid: fbUser.uid,
           email: fbUser.email || '',
           displayName: fbUser.displayName || fbUser.email?.split('@')[0] || 'User',
-          role: fbUser.email === 'neetijoshi2006@gmail.com' ? 'admin' : 'agent',
+          role: 'agent',
           workspaceId: 'default',
           createdAt: new Date(),
           lastSeen: new Date(),

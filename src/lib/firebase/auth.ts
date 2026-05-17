@@ -15,11 +15,13 @@ import { auth, db } from './config'
 export async function sendPasswordReset(email: string) {
   try {
     let actionCodeSettings = undefined
-    if (typeof window !== 'undefined') {
+    const resetUrl = typeof window !== 'undefined' ? `${window.location.origin}/reset-password` : undefined;
+    const actionUrl = process.env.NEXT_PUBLIC_RESET_PASSWORD_URL || resetUrl;
+    if (actionUrl) {
       actionCodeSettings = {
-        url: `${window.location.origin}/login`,
-        handleCodeInApp: false,
-      }
+        url: actionUrl,
+        handleCodeInApp: true,
+      };
     }
     await sendPasswordResetEmail(auth, email, actionCodeSettings)
   } catch (err: any) {

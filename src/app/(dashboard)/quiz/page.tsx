@@ -210,7 +210,8 @@ export default function QuizPage() {
           </div>
 
           {/* Admin shortcut visible only to the admin for adding questions */}
-          {(user?.role === 'admin' || user?.email === 'neetijoshi2006@gmail.com') && (
+          {user?.role === 'admin' && (
+
             <Link href="/admin/quizzes">
               <button className="flex items-center gap-2 bg-white border-2 border-neutral-150 text-neutral-900 px-5 py-3 rounded-2xl font-bold hover:bg-neutral-50 transition-all text-xs cursor-pointer shadow-sm">
                 <Crown size={14} className="text-yellow-500 fill-yellow-400" />

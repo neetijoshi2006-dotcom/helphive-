@@ -49,7 +49,8 @@ export default function FlashcardsPage() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isFlipped, setIsFlipped] = useState(false)
 
-  const isAdmin = user?.role === 'admin' || user?.email === 'neetijoshi2006@gmail.com'
+  const isAdmin = user?.role === 'admin'
+
 
   // Fetch flashcards from Firestore
   useEffect(() => {

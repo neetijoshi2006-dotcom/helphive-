@@ -56,7 +56,8 @@ export default function AdminFlashcardsPage() {
   const [showAddForm, setShowAddForm] = useState(false)
 
   // Security Check: Only allow 'admin' role or the owner's primary email address
-  const isAdmin = user?.role === 'admin' || user?.email === 'neetijoshi2006@gmail.com'
+  const isAdmin = user?.role === 'admin'
+
 
   // Fetch flashcards from Firestore
   async function fetchFlashcards() {

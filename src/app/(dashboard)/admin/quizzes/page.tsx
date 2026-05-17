@@ -51,7 +51,8 @@ export default function AdminQuizzesPage() {
   const [showAddForm, setShowAddForm] = useState(false)
 
   // Security Check: Only allow 'admin' role or the owner's primary email address
-  const isAdmin = user?.role === 'admin' || user?.email === 'neetijoshi2006@gmail.com'
+  const isAdmin = user?.role === 'admin'
+
 
   // Fetch quizzes from Firestore
   async function fetchQuizzes() {

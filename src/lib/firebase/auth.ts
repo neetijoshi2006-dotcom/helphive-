@@ -4,10 +4,15 @@ import {
   signOut as firebaseSignOut,
   onAuthStateChanged,
   updateProfile,
+  sendPasswordResetEmail,
   type User as FirebaseUser,
 } from 'firebase/auth'
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
 import { auth, db } from './config'
+
+export async function sendPasswordReset(email: string) {
+  await sendPasswordResetEmail(auth, email)
+}
 
 export async function signIn(email: string, password: string) {
   const cred = await signInWithEmailAndPassword(auth, email, password)

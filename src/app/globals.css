@@ -3,12 +3,22 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-primary: #B45309;         /* Deep Honey Amber / Caramel (Primary) - High Contrast, Non-Pink */
-  --color-primary-dim: #B4530922;
-  --color-primary-mid: #B4530944;
-  --color-primary-soft: #B4530911;
+  --color-primary: #6D28D9;         /* High-Contrast Cozy Deep Violet / Amethyst (Primary) - Extremely Visible */
+  --color-primary-50: #F5F3FF;
+  --color-primary-100: #EDE9FE;
+  --color-primary-200: #DDD6FE;
+  --color-primary-300: #C4B5FD;
+  --color-primary-400: #A78BFA;
+  --color-primary-500: #8B5CF6;
+  --color-primary-600: #7C3AED;
+  --color-primary-700: #6D28D9;
+  --color-primary-800: #5B21B6;
+  --color-primary-900: #4C1D95;
+  --color-primary-soft: #EDE9FE;
+  --color-primary-dim: #EDE9FE88;
+  --color-primary-mid: #C4B5FD;
   
-  --color-accent: #D97706;          /* Warm Honey Gold */
+  --color-accent: #D97706;          /* Deep Honey Gold */
   --color-accent-soft: #FEF3C7;
 
   --color-neutral-50: #FFFBF2;      /* Cozy Cream Background */
@@ -33,7 +43,7 @@
 }
 
 :root {
-  --primary: #B45309;
+  --primary: #6D28D9;
 }
 
 body {
@@ -45,22 +55,22 @@ body {
 }
 
 ::selection {
-  background: #B4530922;
-  color: #B45309;
+  background: #EDE9FE;
+  color: #6D28D9;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #E8E4DB; border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: #B45309; }
+::-webkit-scrollbar-thumb:hover { background: #6D28D9; }
 
 /* Smooth scroll */
 html { scroll-behavior: smooth; }
 
 /* Focus ring */
 *:focus-visible {
-  outline: 2px solid #B45309;
+  outline: 2px solid #6D28D9;
   outline-offset: 2px;
 }
 
@@ -71,8 +81,8 @@ html { scroll-behavior: smooth; }
 }
 
 @keyframes pulse-primary {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(180, 83, 9, 0.4); }
-  50% { box-shadow: 0 0 0 10px rgba(180, 83, 9, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(109, 40, 217, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(109, 40, 217, 0); }
 }
 
 @keyframes shimmer {

@@ -121,7 +121,7 @@ export default function RegisterPage() {
                 type="submit" 
                 loading={loading} 
                 disabled={demoLoading}
-                className="w-full rounded-2xl bg-gradient-to-r from-primary to-primary-400 text-white font-semibold py-3 cursor-pointer shadow-md hover:shadow-lg transition-all"
+                className="w-full rounded-2xl bg-primary text-white hover:bg-primary-600 font-semibold py-3 cursor-pointer shadow-md hover:shadow-lg transition-all"
               >
                 Create Account
               </Button>
@@ -139,7 +139,7 @@ export default function RegisterPage() {
             loading={demoLoading}
             disabled={loading}
             variant="outline"
-            className="w-full rounded-2xl border-2 border-primary-200 text-primary hover:bg-primary-50 hover:border-primary font-semibold py-3 cursor-pointer transition-all shadow-sm flex items-center justify-center gap-2"
+            className="w-full rounded-2xl border-2 border-primary bg-white text-primary hover:bg-primary-50 font-semibold py-3 cursor-pointer transition-all shadow-sm flex items-center justify-center gap-2"
           >
             <span>Continue as Demo User 🍯</span>
           </Button>

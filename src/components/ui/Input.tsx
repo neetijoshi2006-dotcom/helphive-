@@ -21,9 +21,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ className, labe
         ref={ref}
         suppressHydrationWarning
         className={cn(
-          'w-full px-5 py-3 rounded-2xl border-2 border-neutral-100 bg-neutral-100 text-sm text-neutral-900',
+          'w-full px-5 py-3 rounded-2xl border-2 border-neutral-200 bg-white text-sm text-neutral-900',
           'placeholder:text-neutral-400 transition-all duration-300',
-          'focus:outline-none focus:border-primary-300 focus:shadow-[0_0_0_4px_rgba(255,107,139,0.15)] hover:border-primary-100',
+          'focus:outline-none focus:border-primary focus:shadow-[0_0_0_4px_rgba(109,40,217,0.15)] hover:border-primary-300',
           error && 'border-red-300 focus:shadow-[0_0_0_4px_rgba(248,113,113,0.15)] focus:border-red-400 hover:border-red-300',
           className
         )}
@@ -53,9 +53,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({ classN
         id={id}
         ref={ref}
         className={cn(
-          'w-full px-5 py-3 rounded-2xl border-2 border-neutral-100 bg-neutral-100 text-sm text-neutral-900 resize-none',
+          'w-full px-5 py-3 rounded-2xl border-2 border-neutral-200 bg-white text-sm text-neutral-900 resize-none',
           'placeholder:text-neutral-400 transition-all duration-300',
-          'focus:outline-none focus:border-primary-300 focus:shadow-[0_0_0_4px_rgba(255,107,139,0.15)] hover:border-primary-100',
+          'focus:outline-none focus:border-primary focus:shadow-[0_0_0_4px_rgba(109,40,217,0.15)] hover:border-primary-300',
           error && 'border-red-300 focus:shadow-[0_0_0_4px_rgba(248,113,113,0.15)] focus:border-red-400 hover:border-red-300',
           className
         )}

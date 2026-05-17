@@ -19,6 +19,7 @@ export default function LoginPage() {
   // Forgot password state
   const [resetEmail, setResetEmail] = useState('')
   const [sendingReset, setSendingReset] = useState(false)
+  const [resetRequestedEmail, setResetRequestedEmail] = useState('')
 
   const router = useRouter()
 
@@ -50,7 +51,10 @@ export default function LoginPage() {
     setSendingReset(true)
     try {
       await sendPasswordReset(resetEmail.trim())
-      toast.success('Password reset email sent! Check your inbox 📬')
+      toast.success('Password reset link sent! Please check your Inbox & Spam folder 📬', {
+        duration: 8000,
+      })
+      setResetRequestedEmail(resetEmail.trim())
       setView('login')
       setEmail(resetEmail) // Autofill on back to login
     } catch (err: any) {
@@ -102,6 +106,16 @@ export default function LoginPage() {
               >
                 <h2 className="text-xl font-bold text-neutral-900 mb-1">Welcome Back! ✨</h2>
                 <p className="text-sm text-neutral-400 mb-6">Sign in to resume your learning adventures.</p>
+
+                {resetRequestedEmail && (
+                  <div className="mb-6 p-4 rounded-2xl bg-amber-50 border border-amber-200/60 text-xs text-amber-800 leading-relaxed flex items-start gap-2">
+                    <span className="text-sm shrink-0">⚠️</span>
+                    <div>
+                      <p className="font-bold">Check your Spam/Junk folder!</p>
+                      <p className="mt-0.5 opacity-90">We sent a reset link to <strong className="underline">{resetRequestedEmail}</strong>. Since the email comes from the default Firebase address, it almost always lands in Spam first!</p>
+                    </div>
+                  </div>
+                )}
 
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <Input

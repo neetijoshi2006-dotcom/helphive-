@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Plus, Trash2, BookOpen, Check, ArrowLeft, Trophy, Sparkles } from 'lucide-react'
+import { Plus, Trash2, BookOpen, Check, ArrowLeft, Trophy, Sparkles, ShieldAlert } from 'lucide-react'
 import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore'
 import { db } from '@/lib/firebase/config'
 import { useAppStore } from '@/lib/store/useAppStore'
@@ -50,8 +50,12 @@ export default function AdminQuizzesPage() {
   const [submitting, setSubmitting] = useState(false)
   const [showAddForm, setShowAddForm] = useState(false)
 
+  // Security Check: Only allow 'admin' role or the owner's primary email address
+  const isAdmin = user?.role === 'admin' || user?.email === 'neetijoshi2006@gmail.com'
+
   // Fetch quizzes from Firestore
   async function fetchQuizzes() {
+    if (!isAdmin) return
     setLoading(true)
     try {
       const querySnapshot = await getDocs(collection(db, 'quizzes'))
@@ -75,12 +79,15 @@ export default function AdminQuizzesPage() {
   }
 
   useEffect(() => {
-    fetchQuizzes()
-  }, [])
+    if (isAdmin) {
+      fetchQuizzes()
+    }
+  }, [user])
 
   // Handle adding a quiz
   async function handleAddQuiz(e: React.FormEvent) {
     e.preventDefault()
+    if (!isAdmin) return
     if (!question.trim()) {
       toast.error('Please enter a question!')
       return
@@ -119,6 +126,7 @@ export default function AdminQuizzesPage() {
 
   // Handle deleting a quiz
   async function handleDeleteQuiz(id: string) {
+    if (!isAdmin) return
     if (!confirm('Are you sure you want to delete this quiz question?')) return
 
     try {
@@ -133,6 +141,7 @@ export default function AdminQuizzesPage() {
 
   // Handle seeding initial quizzes
   async function seedInitialQuizzes() {
+    if (!isAdmin) return
     setSubmitting(true)
     try {
       for (const quiz of DEFAULT_QUIZZES) {
@@ -155,6 +164,28 @@ export default function AdminQuizzesPage() {
     const updated = [...options]
     updated[index] = val
     setOptions(updated)
+  }
+
+  // Render Access Denied for non-admin users
+  if (!isAdmin) {
+    return (
+      <PageWrapper>
+        <div className="max-w-md mx-auto text-center py-20 bg-white border border-neutral-200 rounded-[3rem] p-10 shadow-sm mt-12">
+          <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <ShieldAlert size={32} />
+          </div>
+          <h2 className="text-2xl font-bold text-neutral-900 mb-3">Access Denied 🔒</h2>
+          <p className="text-neutral-500 text-sm leading-relaxed mb-8">
+            This area is restricted to administrators only. You do not have permissions to access the quiz management panels.
+          </p>
+          <Link href="/dashboard">
+            <button className="w-full bg-neutral-900 text-white py-4 rounded-2xl font-semibold hover:opacity-90 transition-all cursor-pointer">
+              Back to Dashboard
+            </button>
+          </Link>
+        </div>
+      </PageWrapper>
+    )
   }
 
   return (
@@ -232,7 +263,7 @@ export default function AdminQuizzesPage() {
                             onClick={() => setCorrectIndex(idx)}
                             className={`px-4 rounded-2xl border-2 font-bold text-xs transition-all flex items-center justify-center shrink-0 cursor-pointer ${
                               correctIndex === idx 
-                                ? 'bg-green-500 border-green-500 text-white' 
+                                ? 'bg-green-50/50 border-green-500 text-green-800 font-bold' 
                                 : 'bg-white border-neutral-150 text-neutral-400 hover:border-neutral-300'
                             }`}
                           >

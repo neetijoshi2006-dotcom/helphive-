@@ -41,18 +41,33 @@ export default function AIAssistantPage() {
     setInput('')
     setLoading(true)
 
-    setTimeout(() => {
-      const responses: Record<string, string> = {
-        'summarise': 'Here is your weekly ticket summary 📊:\n\n- Total tickets: 34 open, 12 pending, 28 resolved\n- Top category: Billing (12 tickets, up 15% from last week)\n- Critical issues: 3 (SSO integration, payment gateway, data export)\n- Average resolution time: 4.2 hours\n- CSAT score: 4.7/5.0\n\nKey trends:\n- Authentication-related tickets increased by 30%\n- First response time improved to 12 minutes (down from 18)\n- Agent Casey Kim has the highest CSAT at 4.9',
-        'draft': 'Here is a draft refund reply 🎀:\n\n---\n\nSubject: Your Refund Request - [Ticket ID]\n\nDear [Customer Name],\n\nThank you for reaching out regarding the billing discrepancy on your account. I have reviewed your case and can confirm that an overcharge occurred during the last billing cycle.\n\nI have processed a full refund of [amount] to your original payment method. Please allow 5-7 business days for the refund to appear on your statement.\n\nTo prevent this from happening in the future, I have also flagged your account for a manual review during the next billing cycle.\n\nPlease do not hesitate to reach out if you have any further questions or concerns.\n\nBest regards,\n[Agent Name]\nHelpHive Support Team',
-        'common': 'Based on today\'s ticket data, here are the most common issues 🌸:\n\n1. Password Reset Failures (8 tickets)\n   - Primarily on mobile iOS devices\n   - Related to v3.2.1 update\n   - Fix in progress for v3.2.2\n\n2. Billing Discrepancies (5 tickets)\n   - Pro plan upgrade proration errors\n   - Automated refund process recommended\n\n3. API Rate Limiting (4 tickets)\n   - Enterprise customers hitting new limits\n   - Consider adjusting tier thresholds\n\n4. SSO Integration (3 tickets)\n   - SAML configuration issues\n   - Documentation update needed',
-        'default': 'I\'ve analyzed the available data and here are my findings ✨:\n\n- Your support queue is performing beautifully!\n- Resolution times are trending downward.\n- Customer satisfaction remains high at 4.7/5.0.\n- I recommend prioritizing the 3 critical tickets first.\n\nWould you like me to go deeper into any specific area? I can draft replies, create summaries, or help identify patterns in your support data.',
-      }
-      const key = text.toLowerCase().includes('summar') ? 'summarise' : text.toLowerCase().includes('draft') || text.toLowerCase().includes('refund') ? 'draft' : text.toLowerCase().includes('common') ? 'common' : 'default'
-      const aiMsg: Message = { id: (Date.now()+1).toString(), role: 'assistant', content: responses[key], time: new Date() }
+    try {
+      // Convert our messages format to what the Gemini API expects
+      const history = messages
+        .filter(m => m.id !== '0') // Skip the welcome message
+        .map(m => ({
+          role: m.role === 'assistant' ? 'model' : 'user',
+          parts: m.content
+        }))
+        
+      const res = await fetch('/api/ai/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ history, message: text.trim() })
+      })
+      
+      const data = await res.json()
+      
+      if (!res.ok) throw new Error(data.error || 'AI service unavailable')
+      
+      const aiMsg: Message = { id: (Date.now()+1).toString(), role: 'assistant', content: data.reply, time: new Date() }
       setMessages(prev => [...prev, aiMsg])
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to connect to AI 🥺')
+      console.error(error)
+    } finally {
       setLoading(false)
-    }, 1200)
+    }
   }
 
   const copyToClipboard = (id: string, text: string) => {

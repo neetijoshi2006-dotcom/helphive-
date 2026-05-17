@@ -23,12 +23,12 @@ export async function sendPasswordReset(email: string) {
     }
     await sendPasswordResetEmail(auth, email, actionCodeSettings)
   } catch (err: any) {
-    // If the active domain is not yet whitelisted in Firebase Console, fallback to default template
-    if (err?.code === 'auth/unauthorized-continue-uri') {
-      console.warn('Continue URL domain not whitelisted. Falling back to default email template.')
+    // Fallback completely to the standard Firebase email reset if any continue URL or whitelisting error occurs
+    console.warn('Redirect settings failed, falling back to default reset:', err)
+    try {
       await sendPasswordResetEmail(auth, email)
-    } else {
-      throw err
+    } catch (fallbackErr) {
+      throw fallbackErr
     }
   }
 }

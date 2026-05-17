@@ -148,7 +148,7 @@ export default function AIAssistantPage() {
         <div className="px-4 md:px-6 py-4 md:py-5 border-t border-primary-100 bg-neutral-100/50 backdrop-blur-md shrink-0">
           <form onSubmit={e => { e.preventDefault(); sendMessage(input) }} className="flex gap-2 md:gap-3">
             <input value={input} onChange={e => setInput(e.target.value)} placeholder="Ask HiveAI for some magic... ✨"
-              className="flex-1 px-4 md:px-5 py-2.5 md:py-3 rounded-full bg-neutral-100 border-2 border-primary-100 text-xs md:text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-primary focus:shadow-[0_0_0_4px_rgba(255,107,139,0.15)] transition-all" />
+              className="flex-1 px-4 md:px-5 py-2.5 md:py-3 rounded-full bg-neutral-100 border-2 border-primary-100 text-[16px] md:text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-primary focus:shadow-[0_0_0_4px_rgba(255,107,139,0.15)] transition-all" />
             <Button type="submit" disabled={!input.trim() || loading} size="md" className="rounded-full px-5 md:px-6 bg-gradient-to-r from-primary to-primary-400 shrink-0">
               <Send className="w-4 h-4" />
             </Button>

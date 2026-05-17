@@ -5,20 +5,16 @@ import { useRouter } from 'next/navigation'
 import { signUp } from '@/lib/firebase/auth'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
-import { useAppStore } from '@/lib/store/useAppStore'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
-import type { User } from '@/types/user'
 
 export default function RegisterPage() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  const [demoLoading, setDemoLoading] = useState(false)
   const router = useRouter()
-  const { setUser } = useAppStore()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -41,25 +37,6 @@ export default function RegisterPage() {
     } finally {
       setLoading(false)
     }
-  }
-
-  function handleDemoLogin() {
-    setDemoLoading(true)
-    setTimeout(() => {
-      localStorage.setItem('helphive_demo_user', 'true')
-      setUser({
-        uid: 'demo-user-123',
-        email: 'demo@helphive.com',
-        displayName: 'Demo Bee 🐝',
-        role: 'admin',
-        workspaceId: 'default',
-        createdAt: new Date(),
-        lastSeen: new Date(),
-      } as User)
-      toast.success('Signed in as Guest Demo! 🍯✨')
-      router.push('/dashboard')
-      setDemoLoading(false)
-    }, 800)
   }
 
   return (
@@ -125,29 +102,12 @@ export default function RegisterPage() {
               <Button 
                 type="submit" 
                 loading={loading} 
-                disabled={demoLoading}
                 className="w-full rounded-2xl bg-primary text-white hover:bg-primary-600 font-semibold py-3 cursor-pointer shadow-md hover:shadow-lg transition-all"
               >
                 Create Account
               </Button>
             </div>
           </form>
-
-          <div className="relative flex items-center justify-center my-6">
-            <div className="border-t border-neutral-100 w-full" />
-            <span className="absolute bg-white px-3 text-xs text-neutral-400 font-medium tracking-wider uppercase">Or</span>
-          </div>
-
-          {/* Guest/Demo Bypass Button */}
-          <Button 
-            onClick={handleDemoLogin} 
-            loading={demoLoading}
-            disabled={loading}
-            variant="outline"
-            className="w-full rounded-2xl border-2 border-primary bg-white text-primary hover:bg-primary-50 font-semibold py-3 cursor-pointer transition-all shadow-sm flex items-center justify-center gap-2"
-          >
-            <span>Continue as Demo User 🍯</span>
-          </Button>
         </div>
 
         <p className="text-center text-sm text-neutral-400 mt-6 font-medium">

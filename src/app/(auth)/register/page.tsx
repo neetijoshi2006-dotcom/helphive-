@@ -31,8 +31,13 @@ export default function RegisterPage() {
       await signUp(email, password, name)
       toast.success('Account created successfully! Welcome 🐝')
       router.push('/dashboard')
-    } catch {
-      toast.error('Failed to create account 🥺')
+    } catch (err: any) {
+      console.error('Registration failed:', err)
+      const message = err?.message || 'Failed to create account 🥺'
+      const cleanMessage = message.includes('auth/') 
+        ? message.split('auth/')[1].replace(/-/g, ' ')
+        : message
+      toast.error(cleanMessage)
     } finally {
       setLoading(false)
     }

@@ -26,8 +26,13 @@ export default function LoginPage() {
       await signIn(email, password)
       toast.success('Welcome back to HelpHive! 🐝')
       router.push('/dashboard')
-    } catch {
-      toast.error('Invalid email or password 🥺')
+    } catch (err: any) {
+      console.error('Sign in failed:', err)
+      const message = err?.message || 'Invalid email or password 🥺'
+      const cleanMessage = message.includes('auth/') 
+        ? message.split('auth/')[1].replace(/-/g, ' ')
+        : message
+      toast.error(cleanMessage)
     } finally {
       setLoading(false)
     }

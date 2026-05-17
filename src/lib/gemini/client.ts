@@ -59,3 +59,17 @@ export async function chatWithAI(history: { role: string; parts: string }[], use
   
   return callGroqAPI(messages)
 }
+
+export async function generateStudyPlan(syllabus: string, datesheet: string): Promise<string> {
+  const prompt = `Please create a detailed, day-by-day study planner based on this syllabus and exam datesheet.
+Break down the syllabus into manageable daily tasks leading up to the exams. Make sure there is time for revision before each exam date.
+Format the output nicely using Markdown, bullet points, and use fun emojis!
+
+Syllabus:
+${syllabus}
+
+Datesheet:
+${datesheet}`
+  return callGroqAPI([{ role: 'user', content: prompt }])
+}
+
